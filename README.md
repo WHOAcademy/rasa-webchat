@@ -1,3 +1,42 @@
+$$ \Huge \color{ProcessBlue} WHO \space Academy's \space Customization \space of \space Rasa \space Webchat $$
+<p align="center">
+    This former part of the documentation explains how integrate this fork with the WHO Academy front end. The remaining part of the documentation is mostly inherited from the original README (and includes the necessary modifications).
+</p>
+
+### How to Integrate This Fork With the WHO Academy Front End
+1. Locally Build the Artifacts Necessary to Run This Customized Library:
+    - have this source on you local
+    - make sure Docker (~ 23.0.5) is installed on your local
+    - in the root folder of the repository, execute:
+      ```
+      docker build --tag whoa-rasa-webchat .
+      docker run --name whoa-rasa-webchat --detach whoa-rasa-webchat
+      docker cp whoa-rasa-webchat:/rasa-webchat/lib/index.js whoa-rasa-webchat-index.js
+      ```
+    - optionally, just to clean your local, also execute in the same folder:
+      ```
+      docker rm -f whoa-rasa-webchat
+      docker rmi whoa-rasa-webchat
+      ```
+2. Upload Such Artifacts From Your Local to Our Azure File Storage Location:
+    - manually upload the newly generated (on your local directory) file `whoa-rasa-webchat-index.js` to our Azure Storage Account `whoalxppublicstorage` inside the container `machine-learning`
+3. Download the Artifacts on the Learner's Browser by Referencing Their URL in Our Front-End Source:
+    - modify the front-end source of our delivery website so that the widget of Rasa Webchat downloads its source from our Azure Storage Account, replacing the default URL that points to `cdn.jsdelivr.net` that you can see in the rest of this documentation, as this code snippet exemplifies:
+      ```diff
+      <script>!(function () {
+        ...
+        (e.src =
+      -    "https://cdn.jsdelivr.net/npm/rasa-webchat@1.x.x/lib/index.js"),
+      +    "https://whoalxppublicstorage.blob.core.windows.net/machine-learning/whoa-rasa-webchat-index.js"),
+        ...
+      })();
+      </script>
+      ```
+
+
+---
+
+
 <p align="center">
 
 <a href="https://www.npmjs.com/package/botfront">
