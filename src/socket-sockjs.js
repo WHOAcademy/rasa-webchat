@@ -5,7 +5,7 @@ import { EventEmitter } from 'events';
 /*
   This implementation mimics the SocketIO implementation.
 */
-export default function (socketUrl, customData, _path, options) {
+export default function (socketUrl, customData, _path, options, jwtToken) {
   const socket = SockJS(socketUrl + (_path || ''));
   const stomp = Stomp.over(socket);
 

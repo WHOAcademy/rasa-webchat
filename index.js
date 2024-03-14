@@ -105,6 +105,7 @@ export const rasaWebchatProTypes = {
   socketUrl: PropTypes.string.isRequired,
   socketPath: PropTypes.string,
   protocolOptions: PropTypes.shape({}),
+  jwtToken: PropTypes.string,
   customData: PropTypes.shape({}),
   handleNewUserMessage: PropTypes.func,
   profileAvatar: PropTypes.string,
@@ -179,6 +180,7 @@ export const rasaWebchatProDefaultTypes = {
   protocol: 'socketio',
   socketUrl: 'http://localhost',
   protocolOptions: {},
+  jwtToken: '',
   badge: 0,
   embedded: false,
   params: {

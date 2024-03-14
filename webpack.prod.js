@@ -59,7 +59,7 @@ module.exports = [{
       }
     ]
   },
-  plugins: [new CleanWebpackPlugin(['lib'])]
+  plugins: []
 }, {
   entry: './index.js',
   externals: {
@@ -129,6 +129,6 @@ module.exports = [{
       }
     ]
   },
-  plugins: [new CleanWebpackPlugin(['module'])]
+  plugins: []
 }
 ];

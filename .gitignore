@@ -12,3 +12,6 @@ module
 
 # Test files
 coverage
+
+# artifacts generated from our CI process:
+whoa-rasa-webchat-index*.js
