@@ -3,35 +3,37 @@ $$ \Huge \color{ProcessBlue} WHO \space Academy's \space Customization \space of
     This former part of the documentation explains how integrate this fork with the WHO Academy front end. The remaining part of the documentation is mostly inherited from the original README (and includes the necessary modifications).
 </p>
 
-### How to Integrate This Fork With the WHO Academy Front End
-1. Locally Build the Artifacts Necessary to Run This Customized Library:
-    - have this source on you local
-    - make sure Docker (~ 23.0.5) is installed on your local
-    - in the root folder of the repository, execute:
-      ```
-      docker build --tag whoa-rasa-webchat .
-      docker run --name whoa-rasa-webchat --detach whoa-rasa-webchat
-      docker cp whoa-rasa-webchat:/rasa-webchat/lib/index.js whoa-rasa-webchat-index.js
-      ```
-    - optionally, just to clean your local, also execute in the same folder:
-      ```
-      docker rm -f whoa-rasa-webchat
-      docker rmi whoa-rasa-webchat
-      ```
-2. Upload Such Artifacts From Your Local to Our Azure File Storage Location:
-    - manually upload the newly generated (on your local directory) file `whoa-rasa-webchat-index.js` to our Azure Storage Account `whoalxppublicstorage` inside the container `machine-learning`
-3. Download the Artifacts on the Learner's Browser by Referencing Their URL in Our Front-End Source:
-    - modify the front-end source of our delivery website so that the widget of Rasa Webchat downloads its source from our Azure Storage Account, replacing the default URL that points to `cdn.jsdelivr.net` that you can see in the rest of this documentation, as this code snippet exemplifies:
-      ```diff
-      <script>!(function () {
-        ...
-        (e.src =
-      -    "https://cdn.jsdelivr.net/npm/rasa-webchat@1.x.x/lib/index.js"),
-      +    "https://whoalxppublicstorage.blob.core.windows.net/machine-learning/whoa-rasa-webchat-index.js"),
-        ...
-      })();
-      </script>
-      ```
+### How to Integrate This Fork With the WHO Academy's Front End
+1. #### Locally Build the Artifacts Necessary to Run This Customized Library:
+    1. have this source on you local
+    1. make sure Docker (~ 23.0.5) is installed on your local
+    1. make your code changes (if any)
+    1. in the root folder of the repository, execute:
+        ```
+        docker build --tag whoa-rasa-webchat .
+        docker run --name whoa-rasa-webchat --detach whoa-rasa-webchat
+        docker cp whoa-rasa-webchat:/rasa-webchat/lib/index.js whoa-rasa-webchat-index.js
+        ```
+    1. optionally, just to clean your local, also execute in the same folder:
+        ```
+        docker rm -f whoa-rasa-webchat
+        docker rmi whoa-rasa-webchat
+        ```
+1. #### Upload Such Artifacts From Your Local to Our Azure File Storage Location:
+    1. rename the newly generated (on your local directory) file `whoa-rasa-webchat-index.js` by adding a semantic version suffix to its filename, such as `whoa-rasa-webchat-index-0-0-1.js` for a suffix that corresponds to version `0.0.1`, where the suffix must represent a version bump compared to the latest version available on our Azure Storage account's container (see following point)
+    1. manually upload the renamed file to our Azure Storage account `whoalxppublicstorage` inside the container `machine-learning`
+1. #### Download the Artifacts on the Learner's Browser by Referencing Their URL in Our Front-End Source:
+    1. modify the front-end source of our delivery website so that the widget of Rasa Webchat downloads its source from our Azure Storage account's container, replacing the default URL that points to `cdn.jsdelivr.net` that you can see in the rest of this documentation, as this code snippet exemplifies (make sure to reference to the desired version using the correct suffix):
+        ```diff
+        <script>!(function () {
+          ...
+          (e.src =
+        -    "https://cdn.jsdelivr.net/npm/rasa-webchat@1.x.x/lib/index.js"),
+        +    "https://whoalxppublicstorage.blob.core.windows.net/machine-learning/whoa-rasa-webchat-index-0-0-1.js"),
+          ...
+        })();
+        </script>
+        ```
 
 
 ---
