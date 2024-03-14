@@ -29,7 +29,7 @@ $$ \Huge \color{ProcessBlue} WHO \space Academy's \space Customization \space of
           ...
           (e.src =
         -    "https://cdn.jsdelivr.net/npm/rasa-webchat@1.x.x/lib/index.js"),
-        +    "https://whoalxppublicstorage.blob.core.windows.net/machine-learning/whoa-rasa-webchat-index-0-0-1.js"),
+        +    "https://files.lxp.academy.who.int/machine-learning/whoa-rasa-webchat-index-0-0-1.js"),
           ...
         })();
         </script>
