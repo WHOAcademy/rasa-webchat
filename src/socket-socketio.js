@@ -1,9 +1,9 @@
 import io from 'socket.io-client';
 
-export default function (socketUrl, customData, path, uselessOptions, jwtToken) {
+export default function (socketUrl, customData, path, uselessOptions, getCurrentJwt) {
   const options = {};
-  if (jwtToken) {
-    options.auth = { token: jwtToken };
+  if (getCurrentJwt) {
+    options.auth = { token: getCurrentJwt() };
   }
   if (path) {
     options.path = path;
