@@ -17,7 +17,7 @@ const ConnectedWidget = forwardRef((props, ref) => {
       path,
       protocol,
       protocolOptions,
-      jwtToken,
+      getCurrentJwt,
       onSocketEvent
     ) {
       this.url = url;
@@ -25,7 +25,7 @@ const ConnectedWidget = forwardRef((props, ref) => {
       this.path = path;
       this.protocol = protocol;
       this.protocolOptions = protocolOptions;
-      this.jwtToken = jwtToken;
+      this.getCurrentJwt = getCurrentJwt;
       this.onSocketEvent = onSocketEvent;
       this.socket = null;
       this.onEvents = [];
@@ -63,7 +63,7 @@ const ConnectedWidget = forwardRef((props, ref) => {
         this.path,
         this.protocol,
         this.protocolOptions,
-        this.jwtToken
+        this.getCurrentJwt
       );
       // We set a function on session_confirm here so as to avoid any race condition
       // this will be called first and will set those parameters for everyone to use.
@@ -94,7 +94,7 @@ const ConnectedWidget = forwardRef((props, ref) => {
       props.socketPath,
       props.protocol,
       props.protocolOptions,
-      props.jwtToken,
+      props.getCurrentJwt,
       props.onSocketEvent
     );
   }
@@ -173,7 +173,7 @@ ConnectedWidget.propTypes = {
   socketUrl: PropTypes.string.isRequired,
   socketPath: PropTypes.string,
   protocolOptions: PropTypes.shape({}),
-  jwtToken: PropTypes.string,
+  getCurrentJwt: PropTypes.func,
   customData: PropTypes.shape({}),
   handleNewUserMessage: PropTypes.func,
   profileAvatar: PropTypes.string,
@@ -229,7 +229,7 @@ ConnectedWidget.defaultProps = {
   protocol: 'socketio',
   socketUrl: 'http://localhost',
   protocolOptions: {},
-  jwtToken: '',
+  getCurrentJwt: undefined,
   badge: 0,
   embedded: false,
   params: {
