@@ -20,7 +20,7 @@ const Carousel = (props) => {
 
   const scrollContainer = useRef();
   const [leftButton, setLeftButton] = useState(false);
-  const [rightButton, setRightButton] = useState(true);
+  const [rightButton, setRightButton] = useState(carousel.elements.length > 1);
   const { mainColor, assistTextColor } = useContext(ThemeContext);
 
 
@@ -53,6 +53,7 @@ const Carousel = (props) => {
   };
 
   const { linkTarget } = props;
+  const defaultLinkTarget = '_self';  // instead of '_blank'
 
   return (
     <React.Fragment>
@@ -66,7 +67,7 @@ const Carousel = (props) => {
             <div className="rw-carousel-card" key={index}>
               <a
                 href={defaultActionUrl}
-                target={linkTarget || '_blank'}
+                target={linkTarget || defaultLinkTarget}
                 rel="noopener noreferrer"
                 onClick={() => handleClick(carouselCard.default_action)}
               >
@@ -83,7 +84,7 @@ const Carousel = (props) => {
               <a
                 className="rw-carousel-card-title"
                 href={defaultActionUrl}
-                target={linkTarget || '_blank'}
+                target={linkTarget || defaultLinkTarget}
                 rel="noopener noreferrer"
                 onClick={() => handleClick(carouselCard.default_action)}
                 style={{ color: assistTextColor }}
@@ -93,7 +94,7 @@ const Carousel = (props) => {
               <a
                 className="rw-carousel-card-subtitle"
                 href={defaultActionUrl}
-                target={linkTarget || '_blank'}
+                target={linkTarget || defaultLinkTarget}
                 rel="noopener noreferrer"
                 onClick={() => handleClick(carouselCard.default_action)}
                 style={{ color: assistTextColor }}
@@ -107,7 +108,7 @@ const Carousel = (props) => {
                       <a
                         key={buttonIndex}
                         href={button.url}
-                        target={linkTarget || '_blank'}
+                        target={linkTarget || defaultLinkTarget}
                         rel="noopener noreferrer"
                         className="rw-reply"
                         style={{ borderColor: mainColor, color: mainColor }}
