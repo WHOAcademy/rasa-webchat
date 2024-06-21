@@ -12,6 +12,8 @@ class Message extends PureComponent {
   render() {
     const { docViewer, linkTarget } = this.props;
     const sender = this.props.message.get('sender');
+    // NOTE: `sender === 'response'` means message by the chatbot,
+    // while `sender === 'client'` means message by the user
     const text = this.props.message.get('text');
     const customCss = this.props.message.get('customCss') && this.props.message.get('customCss').toJS();
 
@@ -31,6 +33,9 @@ class Message extends PureComponent {
       style = { color: userTextColor, backgroundColor: userBackgroundColor };
     }
 
+    const classNameForTextMessage = "rw-message-text";
+    const classNameForTextMessageReaction = "rw-message-text-reaction";
+
     return (
       <div
         className={sender === 'response' && customCss && customCss.style === 'class' ?
@@ -38,31 +43,47 @@ class Message extends PureComponent {
           `rw-${sender}`}
         style={style}
       >
-        <div
-          className="rw-message-text"
-        >
-          {sender === 'response' ? (
-            <ReactMarkdown
-              className={'rw-markdown'}
-              source={text}
-              linkTarget={(url) => {
-                if (!url.startsWith('mailto') && !url.startsWith('javascript')) return '_blank';
-                return undefined;
-              }}
-              transformLinkUri={null}
-              renderers={{
-                link: props =>
-                  docViewer ? (
-                    <DocViewer src={props.href}>{props.children}</DocViewer>
-                  ) : (
-                    <a href={props.href} target={linkTarget || '_blank'} rel="noopener noreferrer" onMouseUp={e => e.stopPropagation()}>{props.children}</a>
-                  )
-              }}
-            />
-          ) : (
-            text
-          )}
-        </div>
+        {sender === 'response' ? (
+          <>
+            <div
+              className={classNameForTextMessage}
+            >
+              <ReactMarkdown
+                className={'rw-markdown'}
+                source={text}
+                linkTarget={(url) => {
+                  if (!url.startsWith('mailto') && !url.startsWith('javascript')) return '_blank';
+                  return undefined;
+                }}
+                transformLinkUri={null}
+                renderers={{
+                  link: props =>
+                    docViewer ? (
+                      <DocViewer src={props.href}>{props.children}</DocViewer>
+                    ) : (
+                      <a href={props.href} target={linkTarget || '_blank'} rel="noopener noreferrer" onMouseUp={e => e.stopPropagation()}>{props.children}</a>
+                    )
+                }}
+              />
+            </div>
+            <div
+              className={classNameForTextMessageReaction}
+            >
+              👍
+            </div>
+            <div
+              className={classNameForTextMessageReaction}
+            >
+              👎
+            </div>
+          </>
+        ) : (
+          <div
+            className={classNameForTextMessage}
+          >
+            {text}
+          </div>
+        )}
       </div>
     );
   }
