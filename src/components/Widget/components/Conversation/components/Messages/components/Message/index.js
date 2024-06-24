@@ -34,7 +34,7 @@ class Message extends PureComponent {
     }
 
     const classNameForTextMessage = "rw-message-text";
-    const classNameForTextMessageReaction = "rw-message-text-reaction";
+    const classNameForTextMessageReactions = "rw-message-text-reactions";
 
     return (
       <div
@@ -67,14 +67,14 @@ class Message extends PureComponent {
               />
             </div>
             <div
-              className={classNameForTextMessageReaction}
+              className={classNameForTextMessageReactions}
             >
-              👍
-            </div>
-            <div
-              className={classNameForTextMessageReaction}
-            >
-              👎
+              <div>
+                <p>👍</p>
+              </div>
+              <div>
+                <p>👍</p>
+              </div>
             </div>
           </>
         ) : (

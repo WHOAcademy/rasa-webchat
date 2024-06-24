@@ -37,6 +37,8 @@
   .#{$namespace}response {
     @include message-bubble($grey-2, #000, 0 15px 15px 15px);
     overflow-wrap: break-word;
+    flex-direction: column;
+    align-items: flex-end;
   }
   
   /* For markdown elements created with default styles */
@@ -52,12 +54,17 @@
     }
   }
   
-  .#{$namespace}message-text-reaction {
-    background-color: deepskyblue;
-      p{
-        font-style: italic;
-        font-weight: bold;
-      }
+  .#{$namespace}message-text-reactions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    div {
+      background-color: deepskyblue;
+      border-radius: 30%;
+      margin: 3%;
+      text-align: center;
+    }
   }
 
 }
