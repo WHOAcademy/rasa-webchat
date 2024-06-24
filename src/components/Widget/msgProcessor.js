@@ -30,3 +30,16 @@ export function isButtons(message) {
     && Object.keys(message).includes('text')
     && (Object.keys(message).includes('quick_replies') || Object.keys(message).includes('buttons'));
 }
+
+export function isButtonsFreezingInput(message) {
+  let isThereAnyBlockingButton = false;
+  if (isButtons(message)) {
+    for (const button of message.quick_replies) {
+      if (button.type === 'postback') {
+        isThereAnyBlockingButton = true;
+        break;
+      }
+    }
+  }
+  return isThereAnyBlockingButton;
+}
