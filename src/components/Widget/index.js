@@ -31,11 +31,12 @@ import {
   changeOldUrl,
   setDomHighlight,
   evalUrl,
-  setCustomCss
+  setCustomCss,
+  toggleInputDisabled
 } from 'actions';
 import { safeQuerySelectorAll } from 'utils/dom';
 import { SESSION_NAME, NEXT_MESSAGE } from 'constants';
-import { isVideo, isImage, isButtons, isText, isCarousel } from './msgProcessor';
+import { isVideo, isImage, isButtons, isButtonsFreezingInput, isText, isCarousel } from './msgProcessor';
 import WidgetLayout from './layout';
 import { storeLocalSession, getLocalSession } from '../../store/reducers/helper';
 
@@ -568,6 +569,12 @@ class Widget extends Component {
     if (customCss) {
       this.props.dispatch(setCustomCss(message.customCss));
     }
+
+    // either freezing or unfreezing the input text based on whether the
+    // the received message contains conversation-blocking buttons - note that
+    // this way only the latest message received matters, being the one that
+    // dictates the latest state update:
+    this.props.dispatch(toggleInputDisabled(isButtonsFreezingInput(messageClean)));
   }
 
   handleMessageSubmit(event) {
