@@ -59,11 +59,15 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    div {
-      background-color: deepskyblue;
+    border-radius: 30%;
+    margin: 3%;
+    .#{$namespace}message-text-single-reaction {
       border-radius: 30%;
       margin: 3%;
       text-align: center;
+      .sent {
+        background-color: deepskyblue;
+      }
     }
   }
 
