@@ -80,7 +80,7 @@
       background-color: deepskyblue !important;
     }
     &.reacted {
-      cursor: not-allowed !important;
+      pointer-events: none !important;
     }
   }
 
