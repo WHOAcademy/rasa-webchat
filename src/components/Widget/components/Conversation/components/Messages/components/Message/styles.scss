@@ -68,6 +68,9 @@
       .sent {
         background-color: deepskyblue;
       }
+      .reacted {
+        pointer-events: none;
+      }
     }
   }
 
