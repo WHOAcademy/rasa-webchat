@@ -59,18 +59,28 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border-radius: 30%;
     margin: 3%;
-    .#{$namespace}message-text-single-reaction {
-      border-radius: 30%;
-      margin: 3%;
-      text-align: center;
-      .sent {
-        background-color: deepskyblue;
-      }
-      .reacted {
-        pointer-events: none;
-      }
+    margin-bottom: 0;
+    &.reacted {
+      cursor: not-allowed !important;
+    }
+  }
+
+  .#{$namespace}message-text-single-reaction {
+    border: solid deepskyblue;
+    border-radius: 30%;
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 6%;
+    margin-right: 6%;
+    padding: 6%;
+    text-align: center;
+    &.sent {
+      background-color: deepskyblue !important;
+    }
+    &.reacted {
+      cursor: not-allowed !important;
     }
   }
 
