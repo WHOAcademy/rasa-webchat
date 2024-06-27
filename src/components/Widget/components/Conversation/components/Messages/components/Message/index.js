@@ -98,7 +98,7 @@ function Message(props) {
             />
           </div>
           <div
-            className={classNameForTextMessageReactions}
+            className={classNameForTextMessageReactions + (wasMessageReactedTo ? ' reacted' : '')}
           >
             <MessageReaction
               emoji={'👍'}
