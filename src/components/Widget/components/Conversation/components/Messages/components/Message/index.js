@@ -1,7 +1,8 @@
-import React, { PureComponent, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { addUserMessage, emitUserMessage } from 'actions';
 
 import { PROP_TYPES } from 'constants';
 import DocViewer from '../docViewer';
@@ -40,9 +41,6 @@ function MessageReaction({emoji, selectedReaction, setselectedReaction, wasMessa
 }
 
 function Message(props) {
-  const [selectedReaction, setselectedReaction] = useState('');
-  const [wasMessageReactedTo, setWasMessageReactedTo] = useState(false);
-
   const { docViewer, linkTarget, sendReaction } = props;
   const sender = props.message.get('sender');
   // NOTE: `sender === 'response'` means message by the chatbot,
@@ -54,7 +52,7 @@ function Message(props) {
     customCss.css = customCss.css.replace(/^\./, '');
   }
 
-  const { userTextColor, userBackgroundColor, assistTextColor, assistBackgoundColor } = this.context;
+  const { userTextColor, userBackgroundColor, assistTextColor, assistBackgoundColor } = useContext(ThemeContext);
   let style;
   if (sender === 'response' && customCss && customCss.style === 'class') {
     style = undefined;
@@ -65,6 +63,9 @@ function Message(props) {
   } else if (sender === 'client') {
     style = { color: userTextColor, backgroundColor: userBackgroundColor };
   }
+
+  const [selectedReaction, setselectedReaction] = useState('');
+  const [wasMessageReactedTo, setWasMessageReactedTo] = useState(false);
 
   return (
     <div
