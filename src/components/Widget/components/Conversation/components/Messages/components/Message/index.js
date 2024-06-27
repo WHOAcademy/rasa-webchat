@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,7 +8,37 @@ import DocViewer from '../docViewer';
 import './styles.scss';
 import ThemeContext from '../../../../../../ThemeContext';
 
+const classNameForTextMessage = "rw-message-text";
+const classNameForTextMessageReactions = "rw-message-text-reactions";
+const classNameForSingleTextMessageReaction = "rw-message-text-single-reaction";
+
+function MessageReaction({ emoji, handleClick, sentReaction, setSentReaction }) {
+  return (
+    <div
+      className={classNameForSingleTextMessageReaction + (emoji === sentReaction ? ' sent' : '')}
+      onClick={(e) => { e.stopPropagation(); handleClick(emoji); setSentReaction(emoji); }}
+      onMouseUp={e => e.stopPropagation()}
+    >
+      {emoji}
+    </div>
+  );
+}
+
 class Message extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.handleReactionClick = this.handleReactionClick.bind(this);
+  }
+
+  handleReactionClick(emoji) {
+    const { sendReaction } = this.props;
+
+    const payload = `/must_orchestrate{"choice":"${emoji}"}`;
+    const title = emoji;
+
+    sendReaction(payload, title);
+  }
+
   render() {
     const { docViewer, linkTarget } = this.props;
     const sender = this.props.message.get('sender');
@@ -33,8 +63,7 @@ class Message extends PureComponent {
       style = { color: userTextColor, backgroundColor: userBackgroundColor };
     }
 
-    const classNameForTextMessage = "rw-message-text";
-    const classNameForTextMessageReactions = "rw-message-text-reactions";
+    const [sentReaction, setSentReaction] = useState('');
 
     return (
       <div
@@ -69,12 +98,18 @@ class Message extends PureComponent {
             <div
               className={classNameForTextMessageReactions}
             >
-              <div>
-                <p>👍</p>
-              </div>
-              <div>
-                <p>👍</p>
-              </div>
+              <MessageReaction
+                emoji={'👍'}
+                handleClick={this.handleReactionClick}
+                sentReaction={sentReaction}
+                setSentReaction={setSentReaction}
+              ></MessageReaction>
+              <MessageReaction
+                emoji={'👎'}
+                handleClick={this.handleReactionClick}
+                sentReaction={sentReaction}
+                setSentReaction={setSentReaction}
+              ></MessageReaction>
             </div>
           </>
         ) : (
@@ -94,7 +129,8 @@ Message.contextType = ThemeContext;
 Message.propTypes = {
   message: PROP_TYPES.MESSAGE,
   docViewer: PropTypes.bool,
-  linkTarget: PropTypes.string
+  linkTarget: PropTypes.string,
+  sendReaction: PropTypes.func
 };
 
 Message.defaultTypes = {
@@ -107,4 +143,11 @@ const mapStateToProps = state => ({
   docViewer: state.behavior.get('docViewer')
 });
 
-export default connect(mapStateToProps)(Message);
+const mapDispatchToProps = dispatch => ({
+  sendReaction: (payload, title) => {
+    dispatch(addUserMessage(title));
+    dispatch(emitUserMessage(payload));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Message);
