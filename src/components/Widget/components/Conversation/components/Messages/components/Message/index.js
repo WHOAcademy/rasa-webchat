@@ -12,6 +12,7 @@ import ThemeContext from '../../../../../../ThemeContext';
 const classNameForTextMessage = "rw-message-text";
 const classNameForTextMessageReactions = "rw-message-text-reactions";
 const classNameForSingleTextMessageReaction = "rw-message-text-single-reaction";
+const allowedMessageReactions = ['👍', '👎'];
 
 function MessageReaction({emoji, selectedReaction, setselectedReaction, wasMessageReactedTo, setWasMessageReactedTo, sendReaction }) {
   return (
@@ -100,22 +101,17 @@ function Message(props) {
           <div
             className={classNameForTextMessageReactions + (wasMessageReactedTo ? ' reacted' : '')}
           >
-            <MessageReaction
-              emoji={'👍'}
-              selectedReaction={selectedReaction}
-              setselectedReaction={setselectedReaction}
-              sendReaction={sendReaction}
-              wasMessageReactedTo={wasMessageReactedTo}
-              setWasMessageReactedTo={setWasMessageReactedTo}
-            ></MessageReaction>
-            <MessageReaction
-              emoji={'👎'}
-              selectedReaction={selectedReaction}
-              setselectedReaction={setselectedReaction}
-              sendReaction={sendReaction}
-              wasMessageReactedTo={wasMessageReactedTo}
-              setWasMessageReactedTo={setWasMessageReactedTo}
-            ></MessageReaction>
+            {allowedMessageReactions.map((reaction, reactionIndex) => (
+              <MessageReaction
+                key={reactionIndex}
+                emoji={reaction}
+                selectedReaction={selectedReaction}
+                setselectedReaction={setselectedReaction}
+                sendReaction={sendReaction}
+                wasMessageReactedTo={wasMessageReactedTo}
+                setWasMessageReactedTo={setWasMessageReactedTo}
+              ></MessageReaction>
+            ))}
           </div>
         </>
       ) : (
