@@ -25,7 +25,7 @@ function MessageReaction({emoji, selectedReaction, setselectedReaction, wasMessa
         (e) => {
           e.stopPropagation();
 
-          const payload = `/must_orchestrate{"choice":"${emoji}"}`;
+          const payload = `/must_orchestrate{"reaction":"${emoji}"}`;
           const title = emoji;
           sendReaction(payload, title);
 
