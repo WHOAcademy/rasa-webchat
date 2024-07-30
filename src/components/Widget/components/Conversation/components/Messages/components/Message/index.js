@@ -14,7 +14,7 @@ const classNameForTextMessageReactions = "rw-message-text-reactions";
 const classNameForSingleTextMessageReaction = "rw-message-text-single-reaction";
 const allowedMessageReactions = ['👍', '👎'];
 
-function MessageReaction({emoji, selectedReaction, setselectedReaction, wasMessageReactedTo, setWasMessageReactedTo, sendReaction }) {
+function MessageReaction({emoji, selectedReaction, setSelectedReaction, wasMessageReactedTo, setWasMessageReactedTo, sendReaction }) {
   return (
     <div
       className={
@@ -30,7 +30,7 @@ function MessageReaction({emoji, selectedReaction, setselectedReaction, wasMessa
           const title = emoji;
           sendReaction(payload, title);
 
-          setselectedReaction(emoji);
+          setSelectedReaction(emoji);
           setWasMessageReactedTo(true);
         }
       }
@@ -65,7 +65,7 @@ function Message(props) {
     style = { color: userTextColor, backgroundColor: userBackgroundColor };
   }
 
-  const [selectedReaction, setselectedReaction] = useState('');
+  const [selectedReaction, setSelectedReaction] = useState('');
   const [wasMessageReactedTo, setWasMessageReactedTo] = useState(false);
 
   return (
@@ -106,7 +106,7 @@ function Message(props) {
                 key={reactionIndex}
                 emoji={reaction}
                 selectedReaction={selectedReaction}
-                setselectedReaction={setselectedReaction}
+                setSelectedReaction={setSelectedReaction}
                 sendReaction={sendReaction}
                 wasMessageReactedTo={wasMessageReactedTo}
                 setWasMessageReactedTo={setWasMessageReactedTo}
