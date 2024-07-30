@@ -146,7 +146,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   sendReaction: (payload, title) => {
-    dispatch(addUserMessage(title));
+    dispatch(addUserMessage(title, false, true));
     dispatch(emitUserMessage(payload));
   }
 });
