@@ -42,12 +42,13 @@ function MessageReaction({emoji, selectedReaction, setSelectedReaction, wasMessa
 }
 
 function Message(props) {
-  const { docViewer, linkTarget, sendReaction } = props;
+  const { docViewer, linkTarget, timestampOfLastChatbotTextMessage, sendReaction } = props;
   const sender = props.message.get('sender');
   // NOTE: `sender === 'response'` means message by the chatbot,
   // while `sender === 'client'` means message by the user
   const text = props.message.get('text');
   const customCss = props.message.get('customCss') && props.message.get('customCss').toJS();
+  const timestamp = props.message.get('timestamp');
 
   if (customCss && customCss.style === 'class') {
     customCss.css = customCss.css.replace(/^\./, '');
@@ -67,6 +68,24 @@ function Message(props) {
 
   const [selectedReaction, setSelectedReaction] = useState('');
   const [wasMessageReactedTo, setWasMessageReactedTo] = useState(false);
+
+  const messageRections = (timestamp !== timestampOfLastChatbotTextMessage) ? null : (
+    <div
+      className={classNameForTextMessageReactions + (wasMessageReactedTo ? ' reacted' : '')}
+    >
+      {allowedMessageReactions.map((reaction, reactionIndex) => (
+        <MessageReaction
+          key={reactionIndex}
+          emoji={reaction}
+          selectedReaction={selectedReaction}
+          setSelectedReaction={setSelectedReaction}
+          sendReaction={sendReaction}
+          wasMessageReactedTo={wasMessageReactedTo}
+          setWasMessageReactedTo={setWasMessageReactedTo}
+        ></MessageReaction>
+      ))}
+    </div>
+  );
 
   return (
     <div
@@ -98,21 +117,7 @@ function Message(props) {
               }}
             />
           </div>
-          <div
-            className={classNameForTextMessageReactions + (wasMessageReactedTo ? ' reacted' : '')}
-          >
-            {allowedMessageReactions.map((reaction, reactionIndex) => (
-              <MessageReaction
-                key={reactionIndex}
-                emoji={reaction}
-                selectedReaction={selectedReaction}
-                setSelectedReaction={setSelectedReaction}
-                sendReaction={sendReaction}
-                wasMessageReactedTo={wasMessageReactedTo}
-                setWasMessageReactedTo={setWasMessageReactedTo}
-              ></MessageReaction>
-            ))}
-          </div>
+          {messageRections}
         </>
       ) : (
         <div
@@ -131,6 +136,7 @@ Message.propTypes = {
   message: PROP_TYPES.MESSAGE,
   docViewer: PropTypes.bool,
   linkTarget: PropTypes.string,
+  timestampOfLastChatbotTextMessage: PropTypes.number,  // NOTE: it can be nullable
   sendReaction: PropTypes.func
 };
 
@@ -141,7 +147,8 @@ Message.defaultTypes = {
 
 const mapStateToProps = state => ({
   linkTarget: state.metadata.get('linkTarget'),
-  docViewer: state.behavior.get('docViewer')
+  docViewer: state.behavior.get('docViewer'),
+  timestampOfLastChatbotTextMessage: state.messages.findLast(message => (message.get('sender') === 'response')).get('timestamp')
 });
 
 const mapDispatchToProps = dispatch => ({
