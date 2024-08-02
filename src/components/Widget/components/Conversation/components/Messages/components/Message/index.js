@@ -42,7 +42,7 @@ function MessageReaction({emoji, selectedReaction, setSelectedReaction, wasMessa
 }
 
 function Message(props) {
-  const { docViewer, linkTarget, timestampOfLastChatbotTextMessage, sendReaction } = props;
+  const { docViewer, linkTarget, timestampOfMessageWithReactionsEnabled, sendReaction } = props;
   const sender = props.message.get('sender');
   // NOTE: `sender === 'response'` means message by the chatbot,
   // while `sender === 'client'` means message by the user
@@ -69,7 +69,7 @@ function Message(props) {
   const [selectedReaction, setSelectedReaction] = useState('');
   const [wasMessageReactedTo, setWasMessageReactedTo] = useState(false);
 
-  const messageRections = (timestamp !== timestampOfLastChatbotTextMessage) ? null : (
+  const messageRections = (timestamp !== timestampOfMessageWithReactionsEnabled) ? null : (
     <div
       className={classNameForTextMessageReactions + (wasMessageReactedTo ? ' reacted' : '')}
     >
@@ -136,7 +136,7 @@ Message.propTypes = {
   message: PROP_TYPES.MESSAGE,
   docViewer: PropTypes.bool,
   linkTarget: PropTypes.string,
-  timestampOfLastChatbotTextMessage: PropTypes.number,  // NOTE: it can be nullable
+  timestampOfMessageWithReactionsEnabled: PropTypes.number,  // NOTE: it can be nullable
   sendReaction: PropTypes.func
 };
 
@@ -145,11 +145,23 @@ Message.defaultTypes = {
   linkTarget: '_blank'
 };
 
-const mapStateToProps = state => ({
-  linkTarget: state.metadata.get('linkTarget'),
-  docViewer: state.behavior.get('docViewer'),
-  timestampOfLastChatbotTextMessage: state.messages.findLast(message => (message.get('sender') === 'response')).get('timestamp')
-});
+const mapStateToProps = state => {
+  let hasUserEverReplied = false;
+  let timestampOfLastChatbotTextMessage = null;
+  for(let messageIndex = state.messages.length - 1; messageIndex >= 0; messageIndex--){
+    let message = state.messages.get(messageIndex);
+    if (message.get('sender') === 'response') {
+      if (!timestampOfLastChatbotTextMessage) timestampOfLastChatbotTextMessage = message.get('timestamp');
+    } else hasUserEverReplied = true;
+    if (timestampOfLastChatbotTextMessage && hasUserEverReplied) break;
+  }
+
+  return {
+    linkTarget: state.metadata.get('linkTarget'),
+    docViewer: state.behavior.get('docViewer'),
+    timestampOfMessageWithReactionsEnabled: (hasUserEverReplied ? timestampOfLastChatbotTextMessage : null)
+  }
+};
 
 const mapDispatchToProps = dispatch => ({
   sendReaction: (payload, title) => {
