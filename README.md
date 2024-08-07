@@ -35,6 +35,15 @@ $$ \Huge \color{ProcessBlue} WHO \space Academy's \space Customization \space of
         </script>
         ```
 
+### How to Develop Locally with Hot Reloading
+1. have this source on you local
+1. make sure Node.js (either 12.12.0 or 14.17.3) is installed on your local
+1. in the root folder of the repository, execute:
+    1. `npm ci` first, to install/update dependencies if you need to,
+    2. and then `npm run dev`, to launch the application locally as embedded in [this basic HTML file that allows to configure the webchat via UI](./dev/src/index.html)
+2. access the logged local application URL from your browser
+3. make your code changes and see them reflected in your locally running application live
+
 
 ---
 
