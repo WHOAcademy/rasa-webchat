@@ -148,7 +148,7 @@ Message.defaultTypes = {
 const mapStateToProps = state => {
   let hasUserEverReplied = false;
   let timestampOfLastChatbotTextMessage = null;
-  for(let messageIndex = state.messages.length - 1; messageIndex >= 0; messageIndex--){
+  for(let messageIndex = state.messages.size - 1; messageIndex >= 1; messageIndex--){
     let message = state.messages.get(messageIndex);
     if (message.get('sender') === 'response') {
       if (!timestampOfLastChatbotTextMessage) timestampOfLastChatbotTextMessage = message.get('timestamp');
@@ -160,7 +160,7 @@ const mapStateToProps = state => {
     linkTarget: state.metadata.get('linkTarget'),
     docViewer: state.behavior.get('docViewer'),
     timestampOfMessageWithReactionsEnabled: (hasUserEverReplied ? timestampOfLastChatbotTextMessage : null)
-  }
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
