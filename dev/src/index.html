@@ -19,7 +19,7 @@
       }
 
       body{
-        background-color: lightsalmon;
+        background-color: deepskyblue;
         background-image: url("https://cdn.pixabay.com/photo/2014/12/03/06/14/operation-theatre-555089_1280.jpg");
         background-position: center;
         background-repeat: no-repeat;
@@ -90,6 +90,12 @@
         line-height: 24px;
         letter-spacing: 0.25px;
       }
+      .rw-widget-container .rw-conversation-container .rw-response .rw-message-text,
+      .rw-widget-container .rw-conversation-container .rw-response #wave {
+        background: var(--chatbot-message-color);
+        border-radius: 8px !important;
+        padding: 8px 16px;
+      }
       .rw-widget-container .rw-conversation-container .rw-header {
         background-image: var(--chatbot-gradient-color) !important;
       }
@@ -139,10 +145,9 @@
         padding: 8px;
       }
       .rw-widget-container .rw-conversation-container .rw-response {
-        background: var(--chatbot-message-color);
-        border-radius: 8px !important;
+        background: var(--default-background);
         display: flex;
-        padding: 8px 16px;
+        padding: 0;
         justify-content: center;
         align-items: flex-start;
         align-self: stretch;

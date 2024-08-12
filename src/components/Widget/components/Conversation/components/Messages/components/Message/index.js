@@ -7,20 +7,20 @@ import { addUserMessage, emitUserMessage } from 'actions';
 import { PROP_TYPES } from 'constants';
 import DocViewer from '../docViewer';
 import './styles.scss';
+import Reaction from 'assets/reaction';
 import ThemeContext from '../../../../../../ThemeContext';
 
 const classNameForTextMessage = "rw-message-text";
 const classNameForTextMessageReactions = "rw-message-text-reactions";
 const classNameForSingleTextMessageReaction = "rw-message-text-single-reaction";
-const allowedMessageReactions = ['👍', '👎'];
+const classNameForSingleTextMessageReactionSeparator = "rw-message-text-single-reaction-separator";
+const allowedMessageReactions = ['👎', '👍'];
 
-function MessageReaction({emoji, selectedReaction, setSelectedReaction, wasMessageReactedTo, setWasMessageReactedTo, sendReaction }) {
+function MessageReaction({ emoji, selectedReaction, setSelectedReaction, wasMessageReactedTo, setWasMessageReactedTo, sendReaction }) {
   return (
     <div
       className={
-        classNameForSingleTextMessageReaction
-        + (emoji === selectedReaction ? ' sent' : '')
-        + (wasMessageReactedTo ? ' reacted' : '')
+        classNameForSingleTextMessageReaction + (wasMessageReactedTo ? ' reacted' : '')
       }
       onClick={
         (e) => {
@@ -36,9 +36,17 @@ function MessageReaction({emoji, selectedReaction, setSelectedReaction, wasMessa
       }
       onMouseUp={e => e.stopPropagation()}
     >
-      {emoji}
+      <Reaction
+        // className="..."
+        representativeEmoji={emoji}
+        selectedReaction={selectedReaction}
+      />
     </div>
   );
+}
+
+function MessageReactionSeparator({ disappear }) {
+  return (disappear ? null : <div className={classNameForSingleTextMessageReactionSeparator}/>);
 }
 
 function Message(props) {
@@ -74,15 +82,21 @@ function Message(props) {
       className={classNameForTextMessageReactions + (wasMessageReactedTo ? ' reacted' : '')}
     >
       {allowedMessageReactions.map((reaction, reactionIndex) => (
-        <MessageReaction
-          key={reactionIndex}
-          emoji={reaction}
-          selectedReaction={selectedReaction}
-          setSelectedReaction={setSelectedReaction}
-          sendReaction={sendReaction}
-          wasMessageReactedTo={wasMessageReactedTo}
-          setWasMessageReactedTo={setWasMessageReactedTo}
-        ></MessageReaction>
+        <>
+          <MessageReactionSeparator
+            key={reactionIndex - 1}
+            disappear={reactionIndex < 1}
+          />
+          <MessageReaction
+            key={reactionIndex}
+            emoji={reaction}
+            selectedReaction={selectedReaction}
+            setSelectedReaction={setSelectedReaction}
+            sendReaction={sendReaction}
+            wasMessageReactedTo={wasMessageReactedTo}
+            setWasMessageReactedTo={setWasMessageReactedTo}
+          />
+        </>
       ))}
     </div>
   );
