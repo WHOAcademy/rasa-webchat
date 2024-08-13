@@ -60,10 +60,18 @@
     align-items: center;
     justify-content: flex-end;
     margin: 0;
-    // width: 100%;
+    width: 100%;
+    border-radius: 24px;
+  }
+
+  .#{$namespace}message-text-reaction-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     border: 1px #C8C8C8 solid;
     border-radius: 24px;
-    gap: 5px;
+    gap: 3px;
     &.reacted {
       cursor: not-allowed !important;
     }
@@ -78,9 +86,10 @@
     }
   }
 
-  .#{$namespace}message-text-single-reaction-separator {border-radius: 4px;
+  .#{$namespace}message-text-single-reaction-separator {
+    border-radius: 4px;
     background: #C8C8C8;
-    height: 80%;
+    height: 24px;
     width: 1px;
   }
 
