@@ -167,8 +167,10 @@ const mapStateToProps = state => {
   let timestampOfLastChatbotTextMessage = null;
   for(let messageIndex = state.messages.size - 1; messageIndex >= 1; messageIndex--){
     let message = state.messages.get(messageIndex);
-    if (message.get('sender') === 'response' && message.get('quick_replies') === undefined) {
-      if (!timestampOfLastChatbotTextMessage) timestampOfLastChatbotTextMessage = message.get('timestamp');
+    if (message.get('sender') === 'response') {
+      if (!timestampOfLastChatbotTextMessage && message.get('quick_replies') === undefined) {
+        timestampOfLastChatbotTextMessage = message.get('timestamp');
+      }
     } else hasUserEverReplied = true;
     if (timestampOfLastChatbotTextMessage && hasUserEverReplied) break;
   }
