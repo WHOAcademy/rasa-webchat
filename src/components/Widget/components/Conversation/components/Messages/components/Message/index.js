@@ -168,8 +168,8 @@ const mapStateToProps = state => {
   for(let messageIndex = state.messages.size - 1; messageIndex >= 1; messageIndex--){
     let message = state.messages.get(messageIndex);
     if (message.get('sender') === 'response') {
-      if (!timestampOfLastChatbotTextMessage && message.get('quick_replies') === undefined) {
-        timestampOfLastChatbotTextMessage = message.get('timestamp');
+      if (!timestampOfLastChatbotTextMessage) {
+        timestampOfLastChatbotTextMessage = message.get('quick_replies') === undefined ? message.get('timestamp') : 1;
       }
     } else hasUserEverReplied = true;
     if (timestampOfLastChatbotTextMessage && hasUserEverReplied) break;
