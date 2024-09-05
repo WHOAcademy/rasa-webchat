@@ -37,6 +37,8 @@
   .#{$namespace}response {
     @include message-bubble($grey-2, #000, 0 15px 15px 15px);
     overflow-wrap: break-word;
+    flex-direction: column;
+    align-items: flex-end;
   }
   
   /* For markdown elements created with default styles */
@@ -50,6 +52,45 @@
         }
       }
     }
+  }
+  
+  .#{$namespace}message-text-reactions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0;
+    width: 100%;
+    border-radius: 24px;
+  }
+
+  .#{$namespace}message-text-reaction-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 1px #C8C8C8 solid;
+    border-radius: 24px;
+    gap: 3px;
+    &.reacted {
+      cursor: not-allowed !important;
+    }
+  }
+
+  .#{$namespace}message-text-single-reaction {
+    cursor: pointer;
+    margin: 0;
+    padding: 3px;
+    &.reacted {
+      pointer-events: none !important;
+    }
+  }
+
+  .#{$namespace}message-text-single-reaction-separator {
+    border-radius: 4px;
+    background: #C8C8C8;
+    height: 24px;
+    width: 1px;
   }
 
 }
