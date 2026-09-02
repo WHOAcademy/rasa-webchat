@@ -18,12 +18,16 @@ const Header = ({
   connected,
   connectingText,
   closeImage,
-  profileAvatar
+  profileAvatar,
+  offlineMode
 }) => {
   const { mainColor } = useContext(ThemeContext);
   return (
     <div className="rw-header-and-loading">
-      <div style={{ backgroundColor: mainColor }}className={`rw-header ${subtitle ? 'rw-with-subtitle' : ''}`}>
+      <div
+        style={{ backgroundColor: mainColor }}
+        className={`rw-header ${subtitle ? 'rw-with-subtitle' : ''} ${offlineMode ? 'rw-offline-header' : ''}`}
+      >
         {
           profileAvatar && (
             <img src={profileAvatar} className="rw-avatar" alt="chat avatar" />
@@ -74,7 +78,8 @@ Header.propTypes = {
   connected: PropTypes.bool,
   connectingText: PropTypes.string,
   closeImage: PropTypes.string,
-  profileAvatar: PropTypes.string
+  profileAvatar: PropTypes.string,
+  offlineMode: PropTypes.bool
 };
 
 export default Header;

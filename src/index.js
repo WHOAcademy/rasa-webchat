@@ -159,6 +159,9 @@ const ConnectedWidget = forwardRef((props, ref) => {
           defaultHighlightCss={props.defaultHighlightCss}
           defaultHighlightAnimation={props.defaultHighlightAnimation}
           defaultHighlightClassname={props.defaultHighlightClassname}
+          offlineMode={props.offlineMode}
+          faqUrl={props.faqUrl}
+          ticketUrl={props.ticketUrl}
         />
       </ThemeContext.Provider>
     </Provider>
@@ -213,7 +216,10 @@ ConnectedWidget.propTypes = {
   userTextColor: PropTypes.string,
   userBackgroundColor: PropTypes.string,
   assistTextColor: PropTypes.string,
-  assistBackgoundColor: PropTypes.string
+  assistBackgoundColor: PropTypes.string,
+  offlineMode: PropTypes.bool,
+  faqUrl: PropTypes.string,
+  ticketUrl: PropTypes.string
 };
 
 ConnectedWidget.defaultProps = {
@@ -260,7 +266,10 @@ ConnectedWidget.defaultProps = {
   userTextColor: '',
   userBackgroundColor: '',
   assistTextColor: '',
-  assistBackgoundColor: ''
+  assistBackgoundColor: '',
+  offlineMode: false,
+  faqUrl: 'https://our_faq_link_here/',
+  ticketUrl: 'https://our_ticket_link_here/'
 };
 
 export default ConnectedWidget;

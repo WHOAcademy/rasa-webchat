@@ -56,6 +56,11 @@ const load = () => {
   if (WebChat) WebChat.default(
     {
       socketUrl: rasaHostUrl,
+      // Replace these placeholders with the production help destinations.
+      offlineMode: true,
+      withRules: false,
+      faqUrl: 'https://our_faq_link_here/',
+      ticketUrl: 'https://our_ticket_link_here/',
       getCurrentJwt: () => { return keycloakToken; },
       initPayload: '/must_orchestrate',
       customData: {

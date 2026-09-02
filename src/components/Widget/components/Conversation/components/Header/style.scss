@@ -23,6 +23,24 @@
     }
   }
 
+  .#{$namespace}header.#{$namespace}offline-header {
+    background-image: linear-gradient(110deg, #7130ee 0%, #087fff 100%);
+    height: 59px;
+
+    .#{$namespace}avatar {
+      height: 24px;
+      left: 28px;
+      top: 18px;
+      width: 24px;
+    }
+
+    .#{$namespace}title {
+      font-size: 20px;
+      left: 60px;
+      line-height: 24px;
+    }
+  }
+
   .#{$namespace}header.#{$namespace}with-subtitle {
     height: 70px;
     .#{$namespace}avatar {

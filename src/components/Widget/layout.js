@@ -13,7 +13,9 @@ const WidgetLayout = (props) => {
   }
   const showCloseButton =
     props.showCloseButton !== undefined ? props.showCloseButton : !props.embedded;
-  const isVisible = props.isChatVisible && !(props.hideWhenNotConnected && !props.connected);
+  const isVisible = props.isChatVisible && (
+    props.offlineMode || !(props.hideWhenNotConnected && !props.connected)
+  );
   const chatShowing = props.isChatOpen || props.embedded;
 
   if (chatShowing && !props.embedded) {
@@ -36,12 +38,15 @@ const WidgetLayout = (props) => {
           params={props.params}
           showFullScreenButton={props.showFullScreenButton}
           {...{ showCloseButton }}
-          connected={props.connected}
+          connected={props.offlineMode || props.connected}
           connectingText={props.connectingText}
           closeImage={props.closeImage}
           customComponent={props.customComponent}
           showMessageDate={props.showMessageDate}
           inputTextFieldHint={props.inputTextFieldHint}
+          offlineMode={props.offlineMode}
+          faqUrl={props.faqUrl}
+          ticketUrl={props.ticketUrl}
         />
       )}
       {!props.embedded && (
@@ -93,7 +98,10 @@ WidgetLayout.propTypes = {
   customComponent: PropTypes.func,
   displayUnreadCount: PropTypes.bool,
   showMessageDate: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-  tooltipPayload: PropTypes.string
+  tooltipPayload: PropTypes.string,
+  offlineMode: PropTypes.bool,
+  faqUrl: PropTypes.string,
+  ticketUrl: PropTypes.string
 };
 
 export default connect(mapStateToProps)(WidgetLayout);

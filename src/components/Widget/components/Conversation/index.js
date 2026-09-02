@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import Header from './components/Header';
 import Messages from './components/Messages';
 import Sender from './components/Sender';
+import OfflineNotice from './components/OfflineNotice';
 import './style.scss';
 
 const Conversation = props =>
-  <div className="rw-conversation-container">
+  <div className={`rw-conversation-container ${props.offlineMode ? 'rw-offline' : ''}`}>
     <Header
       title={props.title}
-      subtitle={props.subtitle}
+      subtitle={props.offlineMode ? null : props.subtitle}
       toggleChat={props.toggleChat}
       toggleFullScreen={props.toggleFullScreen}
       fullScreenMode={props.fullScreenMode}
@@ -20,18 +21,25 @@ const Conversation = props =>
       connectingText={props.connectingText}
       closeImage={props.closeImage}
       profileAvatar={props.profileAvatar}
+      offlineMode={props.offlineMode}
     />
-    <Messages
-      profileAvatar={props.profileAvatar}
-      params={props.params}
-      customComponent={props.customComponent}
-      showMessageDate={props.showMessageDate}
-    />
-    <Sender
-      sendMessage={props.sendMessage}
-      disabledInput={props.disabledInput}
-      inputTextFieldHint={props.inputTextFieldHint}
-    />
+    {props.offlineMode ? (
+      <OfflineNotice faqUrl={props.faqUrl} ticketUrl={props.ticketUrl} />
+    ) : (
+      <React.Fragment>
+        <Messages
+          profileAvatar={props.profileAvatar}
+          params={props.params}
+          customComponent={props.customComponent}
+          showMessageDate={props.showMessageDate}
+        />
+        <Sender
+          sendMessage={props.sendMessage}
+          disabledInput={props.disabledInput}
+          inputTextFieldHint={props.inputTextFieldHint}
+        />
+      </React.Fragment>
+    )}
   </div>;
 
 Conversation.propTypes = {
@@ -51,7 +59,10 @@ Conversation.propTypes = {
   connectingText: PropTypes.string,
   closeImage: PropTypes.string,
   customComponent: PropTypes.func,
-  showMessageDate: PropTypes.oneOfType([PropTypes.bool, PropTypes.func])
+  showMessageDate: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  offlineMode: PropTypes.bool,
+  faqUrl: PropTypes.string,
+  ticketUrl: PropTypes.string
 };
 
 export default Conversation;

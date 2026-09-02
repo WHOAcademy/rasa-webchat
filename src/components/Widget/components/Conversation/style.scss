@@ -19,6 +19,11 @@
   width: 370px;
 }
 
+&.#{$namespace}conversation-container.#{$namespace}offline {
+  border-radius: 12px;
+  width: 320px;
+}
+
 .#{$namespace}slide-out {
   @include animation(0, 0.5s, slide-out);
 }

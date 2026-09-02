@@ -62,6 +62,16 @@ class Widget extends Component {
     styleNode.innerHTML = defaultHighlightAnimation;
     document.body.appendChild(styleNode);
 
+    if (this.props.offlineMode) {
+      this.checkVersionBeforePull();
+      dispatch(pullSession());
+      if (this.props.embedded) {
+        dispatch(showChat());
+        dispatch(openChat());
+      }
+      return;
+    }
+
     this.intervalId = setInterval(() => dispatch(evalUrl(window.location.href)), 500);
     if (connectOn === 'mount') {
       this.initializeWidget();
@@ -88,7 +98,7 @@ class Widget extends Component {
   componentDidUpdate() {
     const { isChatOpen, dispatch, embedded, initialized } = this.props;
 
-    if (isChatOpen) {
+    if (isChatOpen && !this.props.offlineMode) {
       if (!initialized) {
         this.initializeWidget();
       }
@@ -613,6 +623,9 @@ class Widget extends Component {
         displayUnreadCount={this.props.displayUnreadCount}
         showMessageDate={this.props.showMessageDate}
         tooltipPayload={this.props.tooltipPayload}
+        offlineMode={this.props.offlineMode}
+        faqUrl={this.props.faqUrl}
+        ticketUrl={this.props.ticketUrl}
       />
     );
   }
@@ -667,7 +680,10 @@ Widget.propTypes = {
   defaultHighlightAnimation: PropTypes.string,
   defaultHighlightCss: PropTypes.string,
   defaultHighlightClassname: PropTypes.string,
-  messages: ImmutablePropTypes.listOf(ImmutablePropTypes.map)
+  messages: ImmutablePropTypes.listOf(ImmutablePropTypes.map),
+  offlineMode: PropTypes.bool,
+  faqUrl: PropTypes.string,
+  ticketUrl: PropTypes.string
 };
 
 Widget.defaultProps = {
@@ -681,6 +697,7 @@ Widget.defaultProps = {
   inputTextFieldHint: 'Type a message...',
   oldUrl: '',
   disableTooltips: false,
+  offlineMode: false,
   defaultHighlightClassname: '',
   defaultHighlightCss: 'animation: 0.5s linear infinite alternate default-botfront-blinker-animation; outline-style: solid;',
   // unfortunately it looks like outline-style is not an animatable property on Safari

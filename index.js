@@ -159,7 +159,10 @@ export const rasaWebchatProTypes = {
       })
     })
   ),
-  triggerEventListenerUpdateRate: PropTypes.number
+  triggerEventListenerUpdateRate: PropTypes.number,
+  offlineMode: PropTypes.bool,
+  faqUrl: PropTypes.string,
+  ticketUrl: PropTypes.string
 };
 
 RasaWebchatProWithRules.propTypes = {
@@ -201,7 +204,10 @@ export const rasaWebchatProDefaultTypes = {
   tooltipDelay: 500,
   withRules: true,
   rules: null,
-  triggerEventListenerUpdateRate: 500
+  triggerEventListenerUpdateRate: 500,
+  offlineMode: false,
+  faqUrl: 'https://our_faq_link_here/',
+  ticketUrl: 'https://our_ticket_link_here/'
 };
 
 export default React.forwardRef((props, ref) => (
