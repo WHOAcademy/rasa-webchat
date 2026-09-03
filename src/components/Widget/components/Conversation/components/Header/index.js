@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import close from 'assets/clear-button.svg';
+import offlineAvatar from 'assets/cognity_offline.svg';
 import fullscreen from 'assets/fullscreen_button.svg';
 import fullscreenExit from 'assets/fullscreen_exit_button.svg';
 import './style.scss';
@@ -22,6 +23,7 @@ const Header = ({
   offlineMode
 }) => {
   const { mainColor } = useContext(ThemeContext);
+  const avatar = offlineMode ? offlineAvatar : profileAvatar;
   return (
     <div className="rw-header-and-loading">
       <div
@@ -29,8 +31,8 @@ const Header = ({
         className={`rw-header ${subtitle ? 'rw-with-subtitle' : ''} ${offlineMode ? 'rw-offline-header' : ''}`}
       >
         {
-          profileAvatar && (
-            <img src={profileAvatar} className="rw-avatar" alt="chat avatar" />
+          avatar && (
+            <img src={avatar} className="rw-avatar" alt="chat avatar" />
           )
         }
         <div className="rw-header-buttons">
@@ -55,7 +57,7 @@ const Header = ({
             </button>
           }
         </div>
-        <h4 className={`rw-title ${profileAvatar && 'rw-with-avatar'}`}>{title}</h4>
+        <h4 className={`rw-title ${avatar && 'rw-with-avatar'}`}>{title}</h4>
         {subtitle && <span className={profileAvatar && 'rw-with-avatar'}>{subtitle}</span>}
       </div>
       {

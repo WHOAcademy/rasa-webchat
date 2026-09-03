@@ -11,6 +11,9 @@ const WidgetLayout = (props) => {
   if (props.fullScreenMode) {
     classes.push('rw-full-screen');
   }
+  if (props.offlineMode) {
+    classes.push('rw-offline-mode');
+  }
   const showCloseButton =
     props.showCloseButton !== undefined ? props.showCloseButton : !props.embedded;
   const isVisible = props.isChatVisible && (

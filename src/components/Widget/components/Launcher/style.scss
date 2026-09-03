@@ -290,6 +290,25 @@
 }
 
 
+
+.#{$namespace}widget-container.#{$namespace}offline-mode {
+  .#{$namespace}launcher {
+    background: linear-gradient(63deg, #6738ef 27.16%, #0081ff 71.03%) !important;
+    background-image: linear-gradient(63deg, #6738ef 27.16%, #0081ff 71.03%) !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    box-shadow: none !important;
+    height: 60px !important;
+    width: 60px !important;
+  }
+
+  .#{$namespace}close-launcher,
+  .#{$namespace}close-launcher.#{$namespace}default {
+    height: 28px !important;
+    width: 28px !important;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .#{$namespace}hide-sm {
     display: none;

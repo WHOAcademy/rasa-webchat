@@ -1,78 +1,90 @@
 @import "variables.scss";
 @import "common.scss";
 
-.#{$namespace}offline-notice {
-  background: $white;
-  box-sizing: border-box;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  font-family: $fontfamily;
-  min-height: 318px;
-  padding: 16px 16px 58px;
-  text-align: center;
-}
-
-.#{$namespace}offline-message {
-  background: #f4f7fb;
-  border-radius: 8px;
-  box-sizing: border-box;
-  margin: 0 -8px 12px;
-  min-height: 141px;
-  padding: 12px 14px;
-
-  h2 {
-    color: #414141;
-    font-size: 16px;
-    line-height: 24px;
-    margin: 0 0 5px;
-  }
-
-  p {
-    color: #414141;
-    font-size: 16px;
-    line-height: 24px;
-    margin: 0;
-  }
-}
-
-.#{$namespace}offline-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  a {
-    background: #0b83f6;
-    border: 2px solid #0b83f6;
-    border-radius: 22px;
-    box-sizing: border-box;
-    color: $white;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-    min-height: 41px;
-    padding: 9px 18px;
-    text-decoration: none;
-
-    &:last-child {
-      background: $white;
-      border-color: #062d70;
-      color: #062d70;
-    }
-
-    &:focus,
-    &:hover {
-      filter: brightness(0.9);
-      outline: none;
-    }
-
-    &:focus-visible {
-      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
-    }
-  }
-}
-
 .#{$namespace}conversation-container.#{$namespace}offline {
-  border-radius: 12px;
-  width: 320px;
+  border-radius: 8px;
+  width: 321px;
+
+  .#{$namespace}offline-notice {
+    background: $white;
+    box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    font-family: 'Roboto', Arial, sans-serif;
+    min-height: 318px;
+    padding: 16px 16px 58px;
+    text-align: center;
+  }
+
+  .#{$namespace}offline-message {
+    background: #f4f9ff;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin: 0 -8px 12px;
+    min-height: 141px;
+    padding: 8px 16px;
+
+    h2 {
+      color: #434343;
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 16px !important;
+      font-weight: 500;
+      letter-spacing: 0.15px;
+      line-height: 24px;
+      margin: 0 0 5px !important;
+    }
+
+    p {
+      color: #434343;
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 16px !important;
+      font-weight: 400;
+      letter-spacing: 0.25px;
+      line-height: 24px;
+      margin: 0 !important;
+    }
+  }
+
+  .#{$namespace}offline-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    a {
+      align-items: center;
+      background: #0081ff !important;
+      border: 0 !important;
+      border-radius: 100px !important;
+      box-sizing: border-box;
+      color: #f9fcff !important;
+      display: flex;
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 14px !important;
+      font-weight: 400;
+      height: 40px;
+      justify-content: center;
+      letter-spacing: 0.25px;
+      line-height: 21px;
+      margin: 0 !important;
+      padding: 8px 24px;
+      text-decoration: none !important;
+
+      &:last-child {
+        background: $white !important;
+        border: 2px solid #00205c !important;
+        color: #00205c !important;
+      }
+
+      &:focus,
+      &:hover {
+        filter: brightness(0.9);
+        outline: none;
+      }
+
+      &:focus-visible {
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
 }
